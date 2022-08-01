@@ -15,7 +15,7 @@ public class StockCenterMigrationSearchParams extends AbstractMigrationSearchPar
 
     @Override
     public List<StockCenterMigrationRecord> doSearch(long limit) {
-        JSONArray jsonArray = getRestServiceProvider().get("/stockcenter?limit=100");
+        JSONArray jsonArray = getRestServiceProvider().get("/stockcenter?limit=100"); // Melhorar pra trazer apenas os nao migrados
         this.searchResults.clear();
         StockCenterMigrationRecord[] stockCenterMigrationRecords = gson.fromJson(jsonArray.toString(), StockCenterMigrationRecord[].class);
         logger.info(jsonArray.toString());

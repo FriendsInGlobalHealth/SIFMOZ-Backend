@@ -36,16 +36,26 @@ class StockCenterMigrationRecord extends AbstractMigrationRecord {
         getMigratedRecord().setName(this.stockcentername)
         getMigratedRecord().setCode(this.stockcentername.replaceAll(" ", "_").toUpperCase())
         getMigratedRecord().setPrefered(this.preferred)
-        Clinic clinicAux
+        System.out.println(getMigratedRecord())
+        System.out.println(this.clinicuuid)
+            Clinic clinicAux
         try {
             clinicAux = Clinic.findByUuid(this.clinicuuid)
         } catch (Exception e) {
             System.out.println(e.getMessage())
         } finally {
-            System.out.println("Cliniccccc")
+            System.out.println(clinicAux)
         }
         getMigratedRecord().setClinic(clinicAux)
-            getMigratedRecord().save(flush: true)
+            if (getMigratedRecord().hasErrors()) {
+                System.println("ERROR: "+getMigratedRecord().errors)
+                MigrationLog migrationLog = new MigrationLog()
+                migrationLog.errors = getMigratedRecord().errors
+                logs.add(migrationLog)
+            } else {
+                System.println("NO ERROR...")
+                getMigratedRecord().save(flush: true)
+            }
         }
 
 //        stockCenterService.save(getMigratedRecord())

@@ -14,7 +14,7 @@ public class StockMigrationSearchParams extends AbstractMigrationSearchParams<St
     static Logger logger = LogManager.getLogger(StockMigrationSearchParams.class);
     @Override
     public List<StockMigrationRecord> doSearch(long limit) {
-        JSONArray jsonArray = getRestServiceProvider().get("/stock_migration_vw?limit=100");
+        JSONArray jsonArray = getRestServiceProvider().get("/stock_migration_vw?limit=100");// Melhorar pra trazer apenas os nao migrados
         this.searchResults.clear();
         StockMigrationRecord[] stockMigrationRecords = gson.fromJson(jsonArray.toString(), StockMigrationRecord[].class);
         logger.info(jsonArray.toString());
